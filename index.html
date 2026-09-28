@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AuraTab - New Tab</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="cyberpunk">
+  <!-- Interactive Particle Canvas Background -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Ambient Glow Blobs -->
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+
+  <!-- Header Controls -->
+  <header class="top-nav">
+    <div class="greeting-box">
+      <span class="greeting-icon">✨</span>
+      <span id="greeting-text">শুভ সকাল!</span>
+    </div>
+
+    <div class="header-actions">
+      <!-- Rain Ambient Sound Button -->
+      <button id="sound-btn" class="glass-btn" title="ফোকাস রেইন সাউন্ড চালু/বন্ধ করো">
+        <svg id="sound-icon-off" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
+        </svg>
+        <svg id="sound-icon-on" class="icon hidden pulse-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 16.2A4.5 4.5 0 0 0 17.5 8h-1.8A7 7 0 1 0 9 17h11Z"/>
+          <path d="M8 20v2m4-2v2m4-2v2m-6-1v2m4-2v2"/>
+        </svg>
+        <span id="sound-status">বৃষ্টি সাউন্ড</span>
+      </button>
+
+      <!-- Theme Switcher Button -->
+      <div class="theme-dropdown-container">
+        <button id="theme-btn" class="glass-btn" title="থিম পরিবর্তন করো">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41m14.14-14.14l-1.41 1.41"/>
+          </svg>
+          <span id="current-theme-name">থিম</span>
+        </button>
+        <div id="theme-menu" class="glass-menu hidden">
+          <button data-set-theme="cyberpunk" class="theme-option active">
+            <span class="dot cyberpunk-dot"></span> সাইবারপাঙ্ক (Cyberpunk)
+          </button>
+          <button data-set-theme="space" class="theme-option">
+            <span class="dot space-dot"></span> ডিপ স্পেস (Deep Space)
+          </button>
+          <button data-set-theme="sunset" class="theme-option">
+            <span class="dot sunset-dot"></span> লো-ফাই সানসেট (Sunset)
+          </button>
+          <button data-set-theme="matrix" class="theme-option">
+            <span class="dot matrix-dot"></span> নিয়ন ম্যাট্রিক্স (Matrix)
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Todo Button -->
+      <button id="todo-toggle-btn" class="glass-btn" title="আজকের কাজ / টু-ডু">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="m9 11 3 3L22 4"/>
+          <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+        </svg>
+        <span>আজকের লক্ষ্য</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Showcase Container -->
+  <main class="main-container">
+    <!-- Center Clock and Date -->
+    <section class="clock-section">
+      <div class="time-display">
+        <span id="hours">06</span><span class="colon">:</span><span id="minutes">00</span><span class="colon">:</span><span id="seconds">00</span>
+        <span id="ampm">AM</span>
+      </div>
+      <div id="date-display" class="date-text">সোমবার, ২৮ সেপ্টেম্বর, ২০২৬</div>
+    </section>
+
+    <!-- Aesthetic Glowing Search Bar -->
+    <section class="search-section">
+      <form id="search-form" class="search-box glass-card" action="https://www.google.com/search" method="GET">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="m21 21-4.3-4.3"/>
+        </svg>
+        <input 
+          type="text" 
+          name="q" 
+          id="search-input" 
+          placeholder="এখানে কিছু সার্চ করো অথবা URL লিখো..." 
+          autocomplete="off" 
+          autofocus
+        >
+        <button type="submit" class="search-submit" title="সার্চ করো">
+          <span>Search</span>
+          <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14m-7-7 7 7-7 7"/>
+          </svg>
+        </button>
+      </form>
+    </section>
+
+    <!-- Quick Shortcuts Grid -->
+    <section class="shortcuts-section">
+      <div class="shortcuts-grid">
+        <!-- YouTube -->
+        <a href="https://www.youtube.com" class="shortcut-item glass-card" title="YouTube">
+          <div class="shortcut-icon-wrapper yt-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+            </svg>
+          </div>
+          <span class="shortcut-label">YouTube</span>
+        </a>
+
+        <!-- GitHub -->
+        <a href="https://github.com" class="shortcut-item glass-card" title="GitHub">
+          <div class="shortcut-icon-wrapper gh-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+            </svg>
+          </div>
+          <span class="shortcut-label">GitHub</span>
+        </a>
+
+        <!-- ChatGPT / AI -->
+        <a href="https://chatgpt.com" class="shortcut-item glass-card" title="ChatGPT">
+          <div class="shortcut-icon-wrapper ai-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2a10 10 0 0 1 10 10c0 4.42-2.87 8.17-6.84 9.5-.47.16-.66-.2-.66-.45v-1.6c0-.52-.18-.87-.4-.98 2.65-.3 5.43-1.3 5.43-5.9 0-1.3-.46-2.36-1.22-3.19.12-.3.53-1.52-.12-3.15 0 0-1-.32-3.28 1.22A11.4 11.4 0 0 0 12 7.15c-1.02 0-2.04.14-3 .4-2.28-1.54-3.28-1.22-3.28-1.22-.65 1.63-.24 2.85-.12 3.15-.76.83-1.22 1.89-1.22 3.19 0 4.6 2.78 5.6 5.43 5.9-.17.15-.33.43-.38.83-.34.15-1.2.42-1.74-.5-.38-.66-1.08-.72-1.08-.72-.69-.01-.05.44-.05.44.46.21.78 1.03.78 1.03.41 1.25 2.37.83 2.37.83v1.37c0 .25-.19.61-.66.45C4.87 20.17 2 16.42 2 12A10 10 0 0 1 12 2z"/>
+            </svg>
+          </div>
+          <span class="shortcut-label">ChatGPT</span>
+        </a>
+
+        <!-- Facebook -->
+        <a href="https://www.facebook.com" class="shortcut-item glass-card" title="Facebook">
+          <div class="shortcut-icon-wrapper fb-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+          </div>
+          <span class="shortcut-label">Facebook</span>
+        </a>
+
+        <!-- Reddit -->
+        <a href="https://www.reddit.com" class="shortcut-item glass-card" title="Reddit">
+          <div class="shortcut-icon-wrapper reddit-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.703zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-4.466 3.99a.327.327 0 0 0-.231.096.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.096z"/>
+            </svg>
+          </div>
+          <span class="shortcut-label">Reddit</span>
+        </a>
+
+        <!-- Gmail -->
+        <a href="https://mail.google.com" class="shortcut-item glass-card" title="Gmail">
+          <div class="shortcut-icon-wrapper mail-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect width="20" height="16" x="2" y="4" rx="2"/>
+              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+            </svg>
+          </div>
+          <span class="shortcut-label">Gmail</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Motivational Bengali Quote Box -->
+    <section class="quote-section">
+      <p id="quote-text" class="quote-text">"প্রতিটি নতুন দিন হলো নতুন কিছু তৈরি করার সবচেয়ে সুন্দর সুযোগ।"</p>
+    </section>
+  </main>
+
+  <!-- Side To-Do Drawer Panel -->
+  <aside id="todo-panel" class="todo-drawer glass-card hidden">
+    <div class="todo-header">
+      <h3>🎯 আজকের কাজ ও লক্ষ্য</h3>
+      <button id="todo-close-btn" class="icon-btn">&times;</button>
+    </div>
+    <div class="todo-input-group">
+      <input type="text" id="todo-input" placeholder="নতুন কাজ লিখে এন্টার চাপো...">
+      <button id="todo-add-btn" class="glass-btn">যোগ করো</button>
+    </div>
+    <ul id="todo-list" class="todo-items">
+      <!-- Injected by JavaScript -->
+    </ul>
+  </aside>
+
+  <script src="script.js"></script>
+</body>
+</html>
