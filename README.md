@@ -55,3 +55,6 @@ aesthetic-newtab-extension/
 ## 📄 License
 
 This project is licensed under the MIT License.
+
+## 🌐 Browser Compatibility
+Compatible with Chromium-based browsers including Google Chrome, Brave, Microsoft Edge, and Opera.
