@@ -1,4 +1,5 @@
 # 🌟 AuraTab — Aesthetic Animated Chrome New Tab Extension
+#Test 2
 
 An ultra-sleek, interactive, and customizable Chrome New Tab extension featuring dynamic particle physics, real-time clock with Bengali greetings, ambient rain audio, glassmorphism UI, and productivity widgets.
 
